@@ -35,13 +35,6 @@ pipeline {
                                         recursiveSubmodules: true
                                         ]], 
                         submoduleCfg: [],
-                        userRemoteConfigs: [[url: 'checkout([$class: 'GitSCM',
-                        branches: [[name: '**']],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'SubmoduleOption',
-                                        recursiveSubmodules: true
-                                        ]], 
-                        submoduleCfg: [],
                         userRemoteConfigs: [[url: 'https://github.com/tomas-ortega/esri-septiembre-2023.git']]])
                 }
             }
