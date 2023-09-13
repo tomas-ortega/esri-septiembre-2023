@@ -42,12 +42,7 @@ pipeline {
 
         stage('Verificar Maven') {
             steps {
-                sh 'echo "mvn verify"'
-                sh '''
-                    echo "A"
-                    echo "B"
-                    echo "C"
-                '''
+                sh 'docker run -it --rm -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn verify'
             }
         }
 
