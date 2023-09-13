@@ -25,6 +25,28 @@ pipeline {
             }
         }
 
+        stage('Sync Git Repo') {
+            steps {
+                script {
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: '**']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'SubmoduleOption',
+                                        recursiveSubmodules: true
+                                        ]], 
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[url: 'checkout([$class: 'GitSCM',
+                        branches: [[name: '**']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'SubmoduleOption',
+                                        recursiveSubmodules: true
+                                        ]], 
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[url: 'https://github.com/tomas-ortega/esri-septiembre-2023.git']]])
+                }
+            }
+        }
+
         stage('Verificar Maven') {
             steps {
                 sh 'echo "mvn verify"'
