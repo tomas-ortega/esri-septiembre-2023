@@ -46,4 +46,12 @@
   <modules> 
     <module>esri-map-domain</module>
   </modules>
+
+  <distributionManagement>
+    <repository>
+      <id>${repository-id}</id>
+      <name>${repository-name}</name>
+      <url>${repository-url}</url>
+    </repository>
+  </distributionManagement>
 </project>
