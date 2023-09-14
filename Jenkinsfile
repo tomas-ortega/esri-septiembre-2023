@@ -18,6 +18,15 @@ pipeline {
             }
         }
 
+        stage('Deployment Nexus Maven') {
+            steps {
+                script {
+                    def currentFolderProjectName = "${WORKSPACE}".substring(28)
+                    sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn install deploy'
+                }
+            }
+        }
+
         stage('DEBUG: Show raw value') {
             steps {
                 println "NUMBER_1: " + "$NUMBER_1"
@@ -77,14 +86,7 @@ pipeline {
             }
         }
 
-        stage('Deployment Nexus Maven') {
-            steps {
-                script {
-                    def currentFolderProjectName = "${WORKSPACE}".substring(28)
-                    sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn deploy'
-                }
-            }
-        }
+        
 
         stage('Resultado de la suma') {
             steps {
