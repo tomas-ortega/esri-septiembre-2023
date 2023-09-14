@@ -49,15 +49,31 @@ pipeline {
             }
         }
 
-        stage('Build Maven') {
+        stage('Test Maven') {
             steps {
-                sh 'echo "mvn build"'
+                script {
+                    def currentFolderProjectName = "${WORKSPACE}".substring(28)
+                    sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn test'
+                }
             }
         }
 
-        stage('Test Maven') {
+        stage('Sonar Maven') {
             steps {
-                sh 'echo "mvn test"'
+                script {
+                    def currentFolderProjectName = "${WORKSPACE}".substring(28)
+                    sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn sonar:sonar'
+                }
+            }
+        }
+
+
+        stage('Build artifactori Maven') {
+            steps {
+                script {
+                    def currentFolderProjectName = "${WORKSPACE}".substring(28)
+                    sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn install'
+                }
             }
         }
 
