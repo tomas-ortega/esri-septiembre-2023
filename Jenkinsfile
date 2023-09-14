@@ -42,8 +42,10 @@ pipeline {
 
         stage('Verificar Maven') {
             steps {
-                def currentFolderProjectName = "${WORKSPACE}".substring(28)
-                sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn verify'
+                script {
+                    def currentFolderProjectName = "${WORKSPACE}".substring(28)
+                    sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/"' + currentFolderProjectName + ':/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn verify'
+                }
             }
         }
 
