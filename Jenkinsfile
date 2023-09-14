@@ -42,7 +42,7 @@ pipeline {
 
         stage('Verificar Maven') {
             steps {
-                sh 'docker run -it --rm -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn verify'
+                sh 'docker run --rm -v "/var/lib/docker/volumes/esri-jenkins/_data/workspace/${JOB_NAME}":/usr/src/mymaven -w /usr/src/mymaven esri/maven-tool:3.8.6-openjdk-11 mvn verify'
             }
         }
 
