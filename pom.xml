@@ -53,5 +53,10 @@
       <name>${repository-name}</name>
       <url>${repository-url}</url>
     </repository>
+    <snapshotRepository>
+      <id>${snapshot-repository-id}</id>
+      <name>${snapshot-repository-name}</name>
+      <url>${snapshot-repository-url}</url>
+    </snapshotRepository>
   </distributionManagement>
 </project>
