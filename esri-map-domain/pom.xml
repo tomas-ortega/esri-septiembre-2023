@@ -20,6 +20,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <sonar.projectKey>esri-map-domain</sonar.projectKey>
+    <sonar.projectName>esri-map-domain</sonar.projectName>
+    <sonar.projectDescription>ESRI domain module App</sonar.projectDescription>
   </properties>
 
   <dependencies>
