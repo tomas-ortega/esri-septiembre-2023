@@ -77,7 +77,7 @@ pipeline {
             }
         }
 
-        stage('Build artifactori Maven') {
+        stage('Deployment Nexus Maven') {
             steps {
                 script {
                     def currentFolderProjectName = "${WORKSPACE}".substring(28)
