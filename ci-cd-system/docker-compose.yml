@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+  esri-jenkins:
+    build:
+      context: ./esri-jenkins
+    image: esri/jenkins:1.0.0
+    container_name: esri-jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - esri-jenkins:/var/jenkins_home
+      - /usr/bin/docker:/usr/bin/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/volumes/esri-jenkins/_data/workspace:/var/lib/docker/volumes/esri-jenkins/_data/workspace
+    user: root
+    restart: always
+
+  esri-maven-tool:
+    build:
+      context: ./esri-maven-tool
+    image: esri/maven-tool:3.8.6-openjdk-11
+
+  sonarqube-postgresql:
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - sonarqube_postgresql_db:/var/lib/postgresql
+      - sonarqube_postgresql_data:/var/lib/postgresql/data
+    restart: always
+
+  sonarqube:
+    image: sonarqube:community
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://sonarqube-postgresql:5432/sonar
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    ports:
+      - "9002:9000"
+    restart: always
+    depends_on:
+      - sonarqube-postgresql
+
+  esri-nexus:
+    build:
+      context: ./esri-nexus
+    image: esri/nexus:v3.38.1
+    container_name: esri-nexus
+    ports:
+      - "8081:8081"
+    restart: always
+    volumes:
+      - nexus_data:/nexus-data
+
+
+volumes:
+  esri-jenkins:
+    name: esri-jenkins
+
+  sonarqube_data:
+    name: sonarqube_data
+
+  sonarqube_logs:
+    name: sonarqube_logs
+
+  sonarqube_extensions:
+    name: sonarqube_extensions
+
+  sonarqube_postgresql_db:
+    name: sonarqube_postgresql_db
+
+  sonarqube_postgresql_data:
+    name: sonarqube_postgresql_data
+
+  nexus_data:
+    name: nexus_data
